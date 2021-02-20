@@ -33,102 +33,103 @@ public class Main {
         }
         return resultIndex;
     }
-    
+
 //Todo: 0 detection
     class StringToInteger {
-        public int myAtoi(String s) {
+    public int myAtoi(String s) {
 
-            //check if empty
-            if(s.length()<1)
-                return 0;
+        //check if empty
+        if(s.length()<1)
+            return 0;
 
-            //remove white space
-            String noWhiteSpace = s.trim();
+        //remove white space
+        String noWhiteSpace = s.trim();
 
-            if(noWhiteSpace.length()<1)
-                return 0;
+        if(noWhiteSpace.length()<1)
+            return 0;
 
-            //check sign
-            boolean isNegative = false;
-            char sign = noWhiteSpace.charAt(0);
-            String signString = noWhiteSpace;
+        //check sign
+        boolean isNegative = false;
+        char sign = noWhiteSpace.charAt(0);
+        String signString = noWhiteSpace;
 
-            if(sign == '-' ||sign == '+')
+        if(sign == '-' ||sign == '+')
+        {
+            signString = noWhiteSpace.substring(1);
+            if(sign == '-')
             {
-                signString = noWhiteSpace.substring(1);
-                if(sign == '-')
-                {
-                    isNegative = true;}
-                if(sign == '+')
-                {
-                    isNegative = false;
-                }
-            }
-            System.out.println(signString);
-
-            //read digit
-            List<Character> digit = new ArrayList<Character>();
-            for(int i = 0; i<signString.length(); i++)
+                isNegative = true;}
+            if(sign == '+')
             {
-                if(Character.isDigit(signString.charAt(i)))
-                {
-                    if(signString.charAt(i)!= '0')
-                        digit.add(signString.charAt(i));
-                }
-                else
-                    break;
+                isNegative = false;
             }
-            System.out.println("digit "+digit);
-
-
-            //convert to int
-            StringBuilder sb = new StringBuilder();
-            for(Character ch:digit)
-            {
-                sb.append(ch);
-            }
-            String numberString = sb.toString();
-
-            int number;
-
-            long input=0;
-
-            if(digit.size()>0){
-                if(digit.size()<11){
-                    input = Long.parseLong(new String(numberString));
-                }
-                else
-                {
-                    input = (long)Math.pow(2,32);
-                }
-            }
-            else
-                number = 0;
-
-            System.out.println("input "+input);
-
-            //check if it is in the range
-            if(isNegative)
-            {
-                input *= -1;
-            }
-            int upper = (int)Math.pow(2,31);
-            int lower = (int)Math.pow(2,31)*(-1)-1;
-
-            System.out.println("input after sign "+input);
-
-            if(input < lower)
-                number = lower;
-            else if(input > upper)
-                number = upper;
-            else
-                number = (int)input;
-
-            return number;
         }
+        System.out.println(signString);
+
+        //read digit
+        List<Character> digit = new ArrayList<Character>();
+
+        signString =signString.replaceFirst("^0+(?!$)", "");
+        for(int i = 0; i<signString.length(); i++)
+        {
+            if(Character.isDigit(signString.charAt(i)))
+            {
+                digit.add(signString.charAt(i));
+            }
+            else
+                break;
+        }
+        System.out.println("digit "+digit);
 
 
+        //convert to int
+        StringBuilder sb = new StringBuilder();
+        for(Character ch:digit)
+        {
+            sb.append(ch);
+        }
+        String numberString = sb.toString();
+
+        int number;
+
+        long input=0;
+
+        if(digit.size()>0){
+            if(digit.size()<11){
+                input = Long.parseLong(new String(numberString));
+            }
+            else
+            {
+                input = (long)Math.pow(2,32);
+            }
+        }
+        else
+            number = 0;
+
+        System.out.println("input "+input);
+
+        //check if it is in the range
+        if(isNegative)
+        {
+            input *= -1;
+        }
+        int upper = (int)Math.pow(2,31);
+        int lower = (int)Math.pow(2,31)*(-1)-1;
+
+        System.out.println("input after sign "+input);
+
+        if(input < lower)
+            number = lower;
+        else if(input > upper)
+            number = upper;
+        else
+            number = (int)input;
+
+        return number;
     }
+
+
+}
 
     public static void main(String[] args) {
 	// write your code here
